@@ -61,7 +61,7 @@ Redis is used as an in-memory key-value store for caching and real-time querying
 
 ### Data Queries
 
-The system allows for complex queries across all three databases, including:
+The system allows for queries across all three databases, including:
 - **Total Sales by Country**
 - **Sales by Product**
 - **Invoice Summaries**
@@ -86,7 +86,7 @@ The application includes user authentication and role-based authorization using 
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/oskarem/intelligent_data_management.git
+    git clone https://github.com/OskarEM/intelligent-data-management.git
     cd intelligent_data_management
     ```
 
