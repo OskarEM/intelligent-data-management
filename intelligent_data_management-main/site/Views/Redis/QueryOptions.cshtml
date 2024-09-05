@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "QueryOptions";
+}
+
+<h1>Query Options</h1>
+
+
+
+<div>
+    <!-- Button 0 InvoiceSummary -->
+   <!-- Change to a GET form -->
+   <form method="get" action="@Url.Action("InvoiceSummary", "Redis")">
+       <!-- Optionally include any other query parameters as hidden fields -->
+       <button type="submit" class="btn btn-primary">InvoiceSummary</button>
+   </form>
+
+
+   <!-- Button 1 - SalesByProduct -->
+   <form method="get" action="@Url.Action("SalesByAllProducts", "Redis")">
+        <!-- <input type="text" name="productStockCode" value="22629" hidden />  -->
+       <button type="submit" class="btn btn-primary">SalesByAllProducts</button>
+   </form>
+
+
+       <!-- Button 2 - TotalSalesByCountry -->
+
+   <form method="get" action="@Url.Action("TotalSalesByAllCountries", "Redis")">
+       <button type="submit" class="btn btn-primary">TotalSalesByAllCountries</button>
+   </form>
+    
+    <!-- Button 3 - CustomerLifetimeValue -->
+       <form method="get" action="@Url.Action("CustomerLifetimeValue", "Redis")">
+           <button type="submit" class="btn btn-primary">CustomerLifetimeValue</button>
+       </form>
+    
+        <!-- Button 4 - CustomerLifetimeValue -->
+
+     <form method="get" action="@Url.Action("SalesTrends", "Redis")">
+           <!-- Optionally include any other query parameters as hidden fields -->
+           <button type="submit" class="btn btn-primary">SalesTrends</button>
+       </form>
+
+    <!-- ... up to Button 10 -->
+</div>

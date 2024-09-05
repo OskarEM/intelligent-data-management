@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model Site.Models.Sale
+
+
+@{
+    ViewData["Title"] = "Add New Sale";    var isAdmin = User.IsInRole("Admin");
+
+}
+
+<div class="text-center">
+    
+   
+    @if (isAdmin)
+    {
+        <h2>@ViewData["Title"]</h2>
+        
+        <form asp-action="AddSaleData" method="post">
+            <div class="form-group">
+                <label asp-for="InvoiceNo">Invoice No</label>
+                <input asp-for="InvoiceNo" class="form-control" />
+                <span asp-validation-for="InvoiceNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StockCode">Stock Code</label>
+                <input asp-for="StockCode" class="form-control" />
+                <span asp-validation-for="StockCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description">Description</label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity">Quantity</label>
+                <input asp-for="Quantity" type="number" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitPrice">Unit Price</label>
+                <input asp-for="UnitPrice" type="number" step="0.01" class="form-control" />
+                <span asp-validation-for="UnitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerID">Customer ID</label>
+                <input asp-for="CustomerID" class="form-control" />
+                <span asp-validation-for="CustomerID" class="text-danger"></span>
+            </div>
+        
+            <!-- Hidden fields for auto-generated values -->
+            <input type="hidden" asp-for="CountryID" />
+            <input type="hidden" asp-for="InvoiceDateID" />
+        
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        
+        
+        
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
+
+    }
+</div>

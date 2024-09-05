@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+
+@{
+    ViewData["Title"] = "Home Page";
+    var isAdmin = User.IsInRole("Admin");
+
+}
+
+<div class="text-center">
+    
+   
+    <div>
+        <a class="btn btn-primary" href="@Url.Action("QueryOptions", "Redis")">View Redis Data</a>
+        <a class="btn btn-secondary" href="@Url.Action("QueryOptions", "MongoDb")">View Mongo Data</a>
+        <a class="btn btn-success" href="@Url.Action("QueryOptions", "Postgres")">View Postgres Data</a>
+    </div>
+    
+    @if (isAdmin)
+    {
+        <a class="btn btn-success" href="@Url.Action("AddSaleData", "Postgres")">Database Sync</a>
+
+    }
+</div>

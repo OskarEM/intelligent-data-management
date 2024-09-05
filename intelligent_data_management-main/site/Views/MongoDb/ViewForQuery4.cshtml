@@ -1,0 +1,75 @@
+﻿@model SortViewModel<SalesTrendViewModel>
+
+@{
+    ViewData["Title"] = "Sales Trends";
+    // Assuming you're using pagination for this view as well
+    int currentPage = ViewBag.CurrentPage as int? ?? 1;
+    int totalPages = ViewBag.TotalPages as int? ?? 1;
+    int startPage = Math.Max(1, currentPage - 2);
+    int endPage = Math.Min(totalPages, startPage + 4);
+    int pageSize = ViewBag.PageSize as int? ?? 10;
+}
+
+<h1>@ViewData["Title"]</h1>
+<p class="text-info">Currently sorted by: <strong>@Model.SortCriteria.FirstOrDefault()?.Field</strong> in <strong>@(Model.SortCriteria.FirstOrDefault()?.Direction.ToUpper())</strong> order.</p>
+
+<p class="text-muted">Sort by clicking on the column headers.</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">
+                <a class="btn btn-light btn-block text-left" role="button"
+                   href="@Url.Action("SalesTrends", new { sortField = "Year", sortOrder = Model.SortCriteria.FirstOrDefault(c => c.Field == "Year")?.Direction == "asc" ? "desc" : "asc" })">
+                    Year
+                </a>
+            </th>
+            <th scope="col">
+                <a class="btn btn-light btn-block text-left" role="button"
+                   href="@Url.Action("SalesTrends", new { sortField = "Month", sortOrder = Model.SortCriteria.FirstOrDefault(c => c.Field == "Month")?.Direction == "asc" ? "desc" : "asc" })">
+                    Month
+                </a>
+            </th>
+            <th scope="col">
+                <a class="btn btn-light btn-block text-left" role="button"
+                   href="@Url.Action("SalesTrends", new { sortField = "TotalSales", sortOrder = Model.SortCriteria.FirstOrDefault(c => c.Field == "TotalSales")?.Direction == "asc" ? "desc" : "asc" })">
+                    Total Sales
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Data)
+    {
+        <tr>
+            <td>@item.Year</td>
+            <td>@item.Month</td>
+            <td>@item.TotalSales</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div>
+    @if (currentPage > 1)
+    {
+        <a asp-action="SalesTrends" asp-controller="MongoDb" asp-route-pageNumber="@(currentPage - 1)" asp-route-pageSize="@pageSize" asp-route-sortField="@Model.SortCriteria.FirstOrDefault()?.Field" asp-route-sortOrder="@Model.SortCriteria.FirstOrDefault()?.Direction">
+            Previous
+        </a>
+    }
+
+    @for (int i = startPage; i <= endPage; i++)
+    {
+        <a asp-action="SalesTrends" asp-controller="MongoDb" asp-route-pageNumber="@i" asp-route-pageSize="@pageSize" asp-route-sortField="@Model.SortCriteria.FirstOrDefault()?.Field" asp-route-sortOrder="@Model.SortCriteria.FirstOrDefault()?.Direction" class="@(i == currentPage ? "active" : "")">
+            @i
+        </a>
+    }
+
+    @if (currentPage < totalPages && Model.Data.Any())
+    {
+        <a asp-action="SalesTrends" asp-controller="MongoDb" asp-route-pageNumber="@(currentPage + 1)" asp-route-pageSize="@pageSize" asp-route-sortField="@Model.SortCriteria.FirstOrDefault()?.Field" asp-route-sortOrder="@Model.SortCriteria.FirstOrDefault()?.Direction">
+            Next
+        </a>
+    }
+</div>
+<a class="btn btn-danger" href="@Url.Action("QueryOptions", "MongoDb")">Back</a>
